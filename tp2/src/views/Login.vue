@@ -24,7 +24,7 @@
                         email: email,    
                         password: password    
                     }    
-                    axios.get("http://localhost:8081/sir/api/login.php", data)    
+                    axios.get("http://localhost:8081/sir/TP2_SIR/api/login.php", data)    
                         .then((response) => {    
                             console.log(response)    
                             //router.push("/home")    
