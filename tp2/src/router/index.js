@@ -1,27 +1,25 @@
 import Vue from "vue";
-import Router from "vue-router";
-import LoginComponent from "../views/Login.vue";
-import HomeComponent from "../views/Home.vue";
+import VueRouter from "vue-router";
 
-Vue.use(Router);
+Vue.use(VueRouter);
 
-export default new Router({
-  routes: [
-    {
-      path: "/",
-      redirect: {
-        name: "login"
-      }
-    },
-    {
-      path: "/login",
-      name: "login",
-      component: LoginComponent
-    },
-    {
-      path: "/home",
-      name: "home",
-      component: HomeComponent
-    }
-  ]
+const routes = [
+  {
+    path: "/home",
+    name: "home",
+    component: () => import("../views/Home.vue")
+  },
+  {
+    path: "/",
+    name: "login",
+    component: () => import("../views/Login.vue")
+  }
+];
+
+const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes
 });
+
+export default router;

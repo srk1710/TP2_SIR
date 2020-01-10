@@ -1,41 +1,51 @@
 <template>
-    <div id="app">
-        <div id="nav">
+  <div id="app">
+    <!--<div id="nav">
             <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
         </div>
-        <router-view @authenticated="setAuthenticated" />
-    </div>
+    <router-view @authenticated="setAuthenticated" />-->
+    <v-app-bar app color="primary" dark>
+      <router-link to="/home">
+        <v-btn class="ma-2" title outlined color="white">
+          <v-icon left>mdi-home</v-icon>
+          Home
+        </v-btn>
+      </router-link>
+      <router-link to="/">
+        <v-btn class="ma-2" title outlined color="white">
+          <v-icon left>mdi-settings</v-icon>
+          {{ textLogin }}
+        </v-btn>
+      </router-link>
+    </v-app-bar>
+    <v-content>
+      <v-container fluid fill-heigth>
+        <router-view></router-view>
+      </v-container>
+    </v-content>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: 'App',
-        mounted() {
-            if(!this.authenticated) {
-                this.$router.replace({ name: "login" });
-            }
-        },
-        methods: {
-            setAuthenticated(status) {
-                this.authenticated = status;
-            },
-            logout() {
-                this.authenticated = false;
-            }
-        }
-    }
+export default {
+  name: "App",
+
+  data: () => ({
+    textLogin: "Login"
+  })
+};
 </script>
 
 <style>
-    body {
-        background-color: #F0F0F0;
-    }
-    h1 {
-        padding: 0;
-        margin-top: 0;
-    }
-    #app {
-        width: 1024px;
-        margin: auto;
-    }
+body {
+  background-color: #f0f0f0;
+}
+h1 {
+  padding: 0;
+  margin-top: 0;
+}
+#app {
+  width: 100%;
+  margin: auto;
+}
 </style>

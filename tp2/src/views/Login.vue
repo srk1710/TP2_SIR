@@ -10,18 +10,19 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field label="Login" v-model="login" prepend-icon="mdi-at" type="text"></v-text-field>
+                  <v-text-field label="User" v-model="user" prepend-icon="mdi-at" type="text"></v-text-field>
                   <v-text-field
                     label="Password"
                     v-model="password"
                     prepend-icon="mdi-lock"
                     type="password"
                   ></v-text-field>
+                  <div>{{ textErro }}</div>
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="login">Login</v-btn>
+                <v-btn color="primary" @click="validar()">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -36,18 +37,35 @@ import router from "../router";
 import axios from "axios";
 export default {
   data: () => ({
-    login: "",
+    user: "",
     password: "",
-    user: []
+    users: []
   }),
-  computed: {
-    getUser() {
-      return this.$store.getters["utilizadores/getLista"];
-    }
+  data() {
+    return {
+      textErro: ""
+    };
   },
   methods: {
-    login() {
-      console.log(user);
+    validar() {
+      var params = new URLSearchParams();
+      params.append("username", this.user);
+      params.append("password", this.password);
+      axios({
+        method: "POST",
+        url: "http://localhost/SIR/TP2_SIR/api/login.php",
+        data: params
+      })
+        .then(function(response) {
+          if (!response.data.errors) {
+            console.log(response.data.result);
+          } else {
+            alert(response.data.message);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   }
 };

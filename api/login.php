@@ -1,6 +1,8 @@
 <?php
 require_once 'connect.php';
 
+header("Content-Type: application/x-www-form-urlencoded; charset=UTF-8");
+
 if (isset($_SERVER['HTTP_ORIGIN'])) {
         // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
         // you want to allow, and if so:
@@ -21,7 +23,6 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 
         exit(0);
     }
-header("Content-Type: application/json");
 
 if (!isset($_POST['username']) || !isset($_POST['password'])) {
     $response['errors'] = true;
@@ -35,15 +36,18 @@ if (!isset($_POST['username']) || !isset($_POST['password'])) {
         $stmt = $PDO->prepare($query);
 
         $stmt->bindValue(":username", $_POST['username']);
-        $stmt->bindValue(":username", $_POST['password']);
+        $stmt->bindValue(":password", $_POST['password']);
 
         $stmt->execute();
 
-        $result = $stmt->fetch();
-
+        $result = $stmt->fetchAll();
+		
+		error_reporting(0);
+		ini_set(“display_errors”, 0 );
+		
         if (count($result)) {
             $response['errors'] = false;
-            $response['result'] = $result;
+            $response['result'] = $result[0]['username'];
             die(json_encode($response));
         } else {
             $response['errors'] = true;
