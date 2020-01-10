@@ -1,11 +1,6 @@
 //Dados
 const state= {
-    data: [
-        {
-            user: 'teste',
-            password: 'teste'
-        }
-    ]
+    data: []
 }
 
 //Retorna-nos algo dos dados

@@ -32,7 +32,7 @@ if (!isset($_POST['username']) || !isset($_POST['password'])) {
 
     try {
         $PDO->beginTransaction();
-        $query = "SELECT username FROM utilizadores WHERE username = :username && password = :password";
+        $query = "SELECT username, nome, data_nasc, foto, bio FROM utilizadores WHERE username = :username && password = :password";
         $stmt = $PDO->prepare($query);
 
         $stmt->bindValue(":username", $_POST['username']);
@@ -47,7 +47,7 @@ if (!isset($_POST['username']) || !isset($_POST['password'])) {
 		
         if (count($result)) {
             $response['errors'] = false;
-            $response['result'] = $result[0]['username'];
+            $response['result'] = $result;
             die(json_encode($response));
         } else {
             $response['errors'] = true;

@@ -17,7 +17,6 @@
                     prepend-icon="mdi-lock"
                     type="password"
                   ></v-text-field>
-                  <div>{{ textErro }}</div>
                 </v-form>
               </v-card-text>
               <v-card-actions>
@@ -38,14 +37,8 @@ import axios from "axios";
 export default {
   data: () => ({
     user: "",
-    password: "",
-    users: []
+    password: ""
   }),
-  data() {
-    return {
-      textErro: ""
-    };
-  },
   methods: {
     validar() {
       var params = new URLSearchParams();
@@ -58,7 +51,15 @@ export default {
       })
         .then(function(response) {
           if (!response.data.errors) {
-            console.log(response.data.result);
+            console.log(response.data.result[0]["username"]);
+            this.$store.dispatch("userAtivo/add", {
+              username: response.data.result[0]["username"],
+              nome: response.data.result[0]["nome"],
+              email: response.data.result[0]["email"],
+              data_nasc: response.data.result[0]["data_nasc"],
+              foto: response.data.result[0]["foto"],
+              bio: response.data.result[0]["bio"]
+            });
           } else {
             alert(response.data.message);
           }
