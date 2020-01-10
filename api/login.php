@@ -32,7 +32,7 @@ if (!isset($_POST['username']) || !isset($_POST['password'])) {
 
     try {
         $PDO->beginTransaction();
-        $query = "SELECT username, nome, data_nasc, foto, bio FROM utilizadores WHERE username = :username && password = :password";
+        $query = "SELECT username, nome, email, data_nasc, foto, bio FROM utilizadores WHERE username = :username && password = :password";
         $stmt = $PDO->prepare($query);
 
         $stmt->bindValue(":username", $_POST['username']);

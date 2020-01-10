@@ -41,6 +41,7 @@ export default {
   }),
   methods: {
     validar() {
+      const este = this;
       var params = new URLSearchParams();
       params.append("username", this.user);
       params.append("password", this.password);
@@ -51,8 +52,8 @@ export default {
       })
         .then(function(response) {
           if (!response.data.errors) {
-            console.log(response.data.result[0]["username"]);
-            this.$store.dispatch("userAtivo/add", {
+            console.log(response.data.result[0]);
+            este.$store.dispatch("userAtivo/add", {
               username: response.data.result[0]["username"],
               nome: response.data.result[0]["nome"],
               email: response.data.result[0]["email"],
@@ -60,6 +61,7 @@ export default {
               foto: response.data.result[0]["foto"],
               bio: response.data.result[0]["bio"]
             });
+            router.push("/");
           } else {
             alert(response.data.message);
           }

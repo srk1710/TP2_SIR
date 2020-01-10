@@ -7,6 +7,9 @@ const state= {
 const getters = {
     getLista: (state) => {
         return state.data
+    },
+    existe: (state) => {
+        return state.data.length;
     }
 }
 

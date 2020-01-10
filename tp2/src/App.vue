@@ -1,17 +1,12 @@
 <template>
   <div id="app">
-    <!--<div id="nav">
-            <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
-        </div>
-    <router-view @authenticated="setAuthenticated" />-->
-    <v-app-bar app color="primary" dark>
-      <router-link to="/home">
+    <v-app-bar v-if="existe" app color="primary" dark>
+      <router-link to="/">
         <v-btn class="ma-2" title outlined color="white">
-          <v-icon left>mdi-home</v-icon>
-          Home
+          <v-icon left>mdi-home</v-icon>Home
         </v-btn>
       </router-link>
-      <router-link to="/">
+      <router-link to="/login">
         <v-btn class="ma-2" title outlined color="white">
           <v-icon left>mdi-settings</v-icon>
           {{ textLogin }}
@@ -32,7 +27,17 @@ export default {
 
   data: () => ({
     textLogin: "Login"
-  })
+  }),
+  computed: {
+    existe() {
+      var existeOnline = this.$store.getters["userAtivo/existe"];
+      if (existeOnline) {
+        return true;
+      }else{
+          return false;
+      }
+    }
+  }
 };
 </script>
 
