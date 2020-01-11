@@ -18,7 +18,7 @@
       </v-tab>
       <v-tab class="col-3">
         <router-link class="col-12" tag="div" to="/login">
-          <v-icon to="/login" left>mdi-exit-to-app</v-icon>
+          <v-icon left>mdi-exit-to-app</v-icon>
         </router-link>
       </v-tab>
     </v-tabs>
