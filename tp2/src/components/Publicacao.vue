@@ -1,7 +1,7 @@
 <template>
   <div style="padding: 50px;">
       <!-- CABECALHO -->
-    <v-row align="left" justify="left" style="padding: 10px;">
+    <v-row style="padding: 10px;">
       <v-img
         src="https://picsum.photos/id/11/500/300"
         lazy-src="https://picsum.photos/id/11/10/6"
@@ -14,7 +14,7 @@
       <div>Nome de Utilizador</div>
     </v-row>
     <!-- FOTO -->
-    <v-row align="center" justify="center">
+    <v-row>
       <v-img
         src="https://picsum.photos/id/11/500/300"
         lazy-src="https://picsum.photos/id/11/10/6"
@@ -24,7 +24,7 @@
       ></v-img>
     </v-row>
     <!-- COMENTARIOS -->
-    <v-row align="center" justify="center">
+    <v-row>
       
     </v-row>
   </div>

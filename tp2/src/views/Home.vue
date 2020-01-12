@@ -19,16 +19,17 @@ export default {
     if (!existeOnline) {
       router.push("/login");
     }else{
-      this.importarPublicacoes();
+      //this.importarPublicacoes();
     }
   },
   methods: {
-    importarPublicacoes: function() {
+    /*importarPublicacoes: function() {
       const este = this;
       var params = new URLSearchParams();
       axios({
         method: "GET",
-        url: "http://192.168.64.2/api/publicacoes.php"
+        //url: "http://192.168.64.2/api/publicacoes.php",
+        url: "http://localhost/SIR/TP2_SIR/api/login.php",
       })
         .then(function(response) {
           if (!response.data.errors) {
@@ -47,7 +48,7 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-    }
+    }*/
   }
 };
 </script>
