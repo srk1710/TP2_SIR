@@ -28,7 +28,7 @@ export default {
       var params = new URLSearchParams();
       axios({
         method: "GET",
-        url: "http://localhost/SIR/TP2_SIR/api/publicacoes.php"
+        url: "http://192.168.64.2/api/publicacoes.php"
       })
         .then(function(response) {
           if (!response.data.errors) {

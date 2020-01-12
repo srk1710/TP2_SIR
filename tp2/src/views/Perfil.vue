@@ -33,10 +33,30 @@
       </v-col>
     </v-row>
     <v-row style="width: 100%;">
-      <div>Nome de Utilizador</div>
+      <div >abc</div>
     </v-row>
     <v-row style="width: 100%;">
       <div>Bio</div>
     </v-row>
   </div>
 </template>
+
+<script>
+
+import router from "../router";
+import userAtivo from "../store/modules/utilizador";
+
+export default {
+  data: () =>({
+    username: '',
+    email: "",
+    nome: "",
+    data_nasc: ""
+  }),
+  computed: {
+    getUserLogado(){
+      return this.$store.getters["utilizador/getLista"]
+    }
+  }
+}
+</script>
