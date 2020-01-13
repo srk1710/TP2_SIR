@@ -45,33 +45,31 @@
     </v-row>
     <!-- PUBLICAÇÕES -->
     <v-row>
-      <v-col class="col-4 pub">
+      <v-col class="col-md-4 pub">
         <v-img
           class="publicacoes"
           src="https://abrilsuperinteressante.files.wordpress.com/2019/06/site_temponatureza.png"
         ></v-img>
       </v-col>
-      <v-col class="col-4 pub">
+      <v-col class="col-md-4 pub">
         <v-img
           class="publicacoes"
           src="https://www.revistaplaneta.com.br/wp-content/uploads/sites/3/2018/06/12_pl540_unesco1.jpg"
         ></v-img>
       </v-col>
-      <v-col class="col-4 pub">
+      <v-col class="col-md-4 pub">
         <v-img
           class="publicacoes"
           src="https://br.jetss.com/wp-content/uploads/2018/05/010130171208-o-que-significa-natureza.jpg"
         ></v-img>
       </v-col>
-    </v-row>
-    <v-row>
-      <v-col class="col-4 pub">
+      <v-col class="col-md-4 pub">
         <v-img
           class="publicacoes"
           src="https://static.mundoeducacao.bol.uol.com.br/mundoeducacao/conteudo_legenda/4235a7c906ca07412869075b58ac3466.jpg"
         ></v-img>
       </v-col>
-      <v-col class="col-4 pub">
+      <v-col class="col-md-4 pub">
         <v-img
           class="publicacoes"
           src="https://www.a12.com/source/files/originals/natureza-260802.jpg"
@@ -114,11 +112,11 @@ export default {
 </script>
 <style>
 .publicacoes {
-  width: 100%;
-  height: 300px;
+  height: 100%;
 }
 .pub {
-  padding: 20px;
+  width: 100%;
+  padding: 10px;
 }
 .perfil {
   border-radius: 50%;
