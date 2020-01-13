@@ -3,9 +3,6 @@ require_once 'connect.php';
 
 header("Content-Type: application/x-www-form-urlencoded; charset=UTF-8");
 
-error_reporting(0);
-ini_set(“display_errors”, 0 );
-
 if (isset($_SERVER['HTTP_ORIGIN'])) {
         // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
         // you want to allow, and if so:
@@ -19,7 +16,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 
         if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
             // may also be using PUT, PATCH, HEAD etc
-            header("Access-Control-Allow-Methods: GET, POST, OPTIONS, FILE");         
+            header("Access-Control-Allow-Methods: GET, POST, OPTIONS");         
 
         if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
             header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
@@ -27,36 +24,34 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
         exit(0);
     }
 	
-	if(!isset($_POST['descricao']) && !isset($_POST['user']) && !isset($_FILES['foto'])){
+	if(!isset($_POST['idUser'])){
 		$response['errors'] = true;
-		$response['message'] = "Missing Parameteres: ".$_POST['descricao'].$_POST['user'].$_POST['foto'];
+		$response['message'] = "Missing Parameteres";
 		die(json_encode($response));
 	}
 	
     try {
-		
-		$imagem = bin2hex(random_bytes(8)).'.'.pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
-        $targetPath = "../fotos/".$imagem;
-
-        if(!move_uploaded_file($_FILES['foto']['tmp_name'], $targetPath)){
-            $response['errors'] = true;
-            $response['message'] = "Error on file" . $targetPath;
-            die(json_encode($response));
-		}
-		
         $PDO->beginTransaction();
-        $query = "INSERT INTO publicacoes(id_user, foto, descricao) VALUES (:user, :foto, :descricao)";
-		$stmt = $PDO->prepare($query);
-        $stmt->bindValue(':user', $_POST['user']);
-        $stmt->bindValue(':descricao', $_POST['descricao']);
-        $stmt->bindValue(':foto', $imagem);
+        $query = "SELECT id, foto, descricao, data_publicacao FROM publicacoes WHERE id_user = :idUser ORDER BY data_publicacao DESC";
+        $stmt = $PDO->prepare($query);
+        $stmt->bindValue(':idUser', $_POST['idUser']);
+
         $stmt->execute();
 
-        $PDO->commit();
+        $result = $stmt->fetchAll();
 		
-        $response['errors'] = false;
-        die(json_encode($response));
-       
+		error_reporting(0);
+		ini_set(“display_errors”, 0 );
+		
+        if (count($result)) {
+            $response['errors'] = false;
+            $response['result'] = $result;
+            die(json_encode($response));
+        } else {
+            $response['errors'] = true;
+            $response['message'] = "Sem publicações";
+            die(json_encode($response));
+        }
     } catch (PDOException $e) {
         $response['errors'] = true;
         $response['message'] = $e->getMessage();

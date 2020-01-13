@@ -3,11 +3,7 @@
     <!-- CABECALHO -->
     <v-row style="width: 100%;">
       <v-col class="col-2">
-        <v-img
-          v-bind:src="this.foto"
-          id="imagemPerfil"
-          class="grey lighten-2 perfil"
-        ></v-img>
+        <v-img v-bind:src="this.foto" id="imagemPerfil" class="grey lighten-2 perfil"></v-img>
       </v-col>
       <v-col class="col-1"></v-col>
       <v-col class="col-3 d-flex align-center mb-6" style="margin-top: 50px;">
@@ -45,35 +41,8 @@
     </v-row>
     <!-- PUBLICAÇÕES -->
     <v-row>
-      <v-col class="col-md-4 pub">
-        <v-img
-          class="publicacoes"
-          src="https://abrilsuperinteressante.files.wordpress.com/2019/06/site_temponatureza.png"
-        ></v-img>
-      </v-col>
-      <v-col class="col-md-4 pub">
-        <v-img
-          class="publicacoes"
-          src="https://www.revistaplaneta.com.br/wp-content/uploads/sites/3/2018/06/12_pl540_unesco1.jpg"
-        ></v-img>
-      </v-col>
-      <v-col class="col-md-4 pub">
-        <v-img
-          class="publicacoes"
-          src="https://br.jetss.com/wp-content/uploads/2018/05/010130171208-o-que-significa-natureza.jpg"
-        ></v-img>
-      </v-col>
-      <v-col class="col-md-4 pub">
-        <v-img
-          class="publicacoes"
-          src="https://static.mundoeducacao.bol.uol.com.br/mundoeducacao/conteudo_legenda/4235a7c906ca07412869075b58ac3466.jpg"
-        ></v-img>
-      </v-col>
-      <v-col class="col-md-4 pub">
-        <v-img
-          class="publicacoes"
-          src="https://www.a12.com/source/files/originals/natureza-260802.jpg"
-        ></v-img>
+      <v-col v-for="(pub, index) in getPublicacoesUser" :key="index" class="col-md-4 pub">
+        <v-img class="publicacoes" :src="'http://localhost/SIR/TP2_SIR/fotos/' + pub.foto"></v-img>
       </v-col>
     </v-row>
   </div>
@@ -81,6 +50,7 @@
 
 <script>
 import router from "../router";
+import axios from "axios";
 import userAtivo from "../store/modules/utilizador";
 
 export default {
@@ -90,6 +60,11 @@ export default {
     bio: "",
     foto: ""
   }),
+  computed: {
+    getPublicacoesUser() {
+      return this.$store.getters["publicacoesUser/getLista"];
+    }
+  },
   created: function() {
     var existeOnline = this.$store.getters["userAtivo/existe"];
     if (!existeOnline) {
@@ -102,11 +77,40 @@ export default {
     }
   },
   mounted: function() {
+    const este = this;
     var userLogado = this.$store.getters["userAtivo/getLista"];
     this.username = userLogado[0].username;
     this.nome = userLogado[0].nome;
     this.bio = userLogado[0].bio;
     this.foto = userLogado[0].foto;
+
+    var params = new URLSearchParams();
+    params.append("idUser", userLogado[0].id);
+    axios({
+      method: "POST",
+      //url: "http://192.168.64.2/api/publicacoesUser.php",
+      url: "http://localhost/SIR/TP2_SIR/api/publicacoesUser.php",
+      data: params
+    })
+      .then(function(response) {
+        if (!response.data.errors) {
+          var tamanho = response.data.result.length;
+          for (var i = 0; i < tamanho; i++) {
+            este.$store.dispatch("publicacoesUser/add", {
+              id: response.data.result[i]["id"],
+              foto: response.data.result[i]["foto"],
+              descricao: response.data.result[i]["descricao"],
+              data: response.data.result[i]["data"]
+            });
+          }
+          console.log(este.$store.getters["publicacoesUser/getLista"]);
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 };
 </script>

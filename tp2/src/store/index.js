@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 import userAtivo from "./modules/utilizador";
 import publicacoes from "./modules/publicacoes";
+import publicacoesUser from "./modules/publicacoesUser";
 
 export default new Vuex.Store({
   state: {},
@@ -12,6 +13,7 @@ export default new Vuex.Store({
   actions: {},
   modules: {
     userAtivo,
-    publicacoes
+    publicacoes,
+    publicacoesUser
   }
 });
