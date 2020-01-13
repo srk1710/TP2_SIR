@@ -1,5 +1,5 @@
 //Dados
-const state= {
+const state = {
     data: []
 }
 
@@ -7,30 +7,43 @@ const state= {
 const getters = {
     getLista: (state) => {
         return state.data
+    },
+    existe: (state) => {
+        if(state.data.length > 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
 
+
 //Action ativa a mutation - em regra
 const actions = {
-    add({commit}, params){
+    add({ commit }, params) {
         commit('push', params);
     },
-    remove({commit}, key){
+    remove({ commit }, key) {
         commit('remove', key);
+    },
+    clearAll({ commit }) {
+        for(var i = state.data.length; i >= 0; i--){
+            commit('remove', 0);
+        }
     }
 }
 
 //Altera os dados
 const mutations = {
-    push(state, params){
+    push(state, params) {
         state.data.push(params);
     },
-    remove(state, key){
-        state.data.splice( key, 1 );
+    remove(state, key) {
+        state.data.splice(key, 1);
     }
 }
 
-export default{
+export default {
     state,
     actions,
     getters,

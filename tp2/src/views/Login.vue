@@ -77,6 +77,7 @@ export default {
   },
   mounted: function() {
     this.$store.dispatch("userAtivo/remove", 0);
+    this.$store.dispatch("publicacoesUser/clearAll");
   }
 };
 </script>

@@ -78,39 +78,41 @@ export default {
   },
   mounted: function() {
     const este = this;
-    var userLogado = this.$store.getters["userAtivo/getLista"];
-    this.username = userLogado[0].username;
-    this.nome = userLogado[0].nome;
-    this.bio = userLogado[0].bio;
-    this.foto = userLogado[0].foto;
+    if (!este.$store.getters["publicacoesUser/existe"]) {
+      var userLogado = this.$store.getters["userAtivo/getLista"];
+      this.username = userLogado[0].username;
+      this.nome = userLogado[0].nome;
+      this.bio = userLogado[0].bio;
+      this.foto = userLogado[0].foto;
 
-    var params = new URLSearchParams();
-    params.append("idUser", userLogado[0].id);
-    axios({
-      method: "POST",
-      //url: "http://192.168.64.2/api/publicacoesUser.php",
-      url: "http://localhost/SIR/TP2_SIR/api/publicacoesUser.php",
-      data: params
-    })
-      .then(function(response) {
-        if (!response.data.errors) {
-          var tamanho = response.data.result.length;
-          for (var i = 0; i < tamanho; i++) {
-            este.$store.dispatch("publicacoesUser/add", {
-              id: response.data.result[i]["id"],
-              foto: response.data.result[i]["foto"],
-              descricao: response.data.result[i]["descricao"],
-              data: response.data.result[i]["data"]
-            });
-          }
-          console.log(este.$store.getters["publicacoesUser/getLista"]);
-        } else {
-          alert(response.data.message);
-        }
+      var params = new URLSearchParams();
+      params.append("idUser", userLogado[0].id);
+      axios({
+        method: "POST",
+        //url: "http://192.168.64.2/api/publicacoesUser.php",
+        url: "http://localhost/SIR/TP2_SIR/api/publicacoesUser.php",
+        data: params
       })
-      .catch(function(error) {
-        console.log(error);
-      });
+        .then(function(response) {
+          if (!response.data.errors) {
+            var tamanho = response.data.result.length;
+            for (var i = 0; i < tamanho; i++) {
+              este.$store.dispatch("publicacoesUser/add", {
+                id: response.data.result[i]["id"],
+                foto: response.data.result[i]["foto"],
+                descricao: response.data.result[i]["descricao"],
+                data: response.data.result[i]["data"]
+              });
+            }
+            console.log(este.$store.getters["publicacoesUser/getLista"]);
+          } else {
+            alert(response.data.message);
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
   }
 };
 </script>
