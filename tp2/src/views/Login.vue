@@ -58,6 +58,7 @@ export default {
             console.log(response.data.result[0]);
             este.$store.dispatch("userAtivo/add", {
               username: response.data.result[0]["username"],
+              id: response.data.result[0]["id"],
               nome: response.data.result[0]["nome"],
               email: response.data.result[0]["email"],
               data_nasc: response.data.result[0]["data_nasc"],
