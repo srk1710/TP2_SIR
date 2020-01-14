@@ -78,13 +78,14 @@ export default {
   },
   mounted: function() {
     const este = this;
-    if (!este.$store.getters["publicacoesUser/existe"]) {
-      var userLogado = this.$store.getters["userAtivo/getLista"];
-      this.username = userLogado[0].username;
-      this.nome = userLogado[0].nome;
-      this.bio = userLogado[0].bio;
-      this.foto = userLogado[0].foto;
+    
+    var userLogado = this.$store.getters["userAtivo/getLista"];
+    this.username = userLogado[0].username;
+    this.nome = userLogado[0].nome;
+    this.bio = userLogado[0].bio;
+    this.foto = userLogado[0].foto;
 
+    if (!este.$store.getters["publicacoesUser/existe"]) {
       var params = new URLSearchParams();
       params.append("idUser", userLogado[0].id);
       axios({
