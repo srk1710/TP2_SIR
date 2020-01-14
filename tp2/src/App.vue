@@ -22,28 +22,6 @@
         </router-link>
       </v-tab>
     </v-tabs>
-    <!--<v-app-bar class="d-flex justify-space-around mb-6" v-if="existe" app color="primary" dark>
-      <v-card class="pa-2">
-        <router-link to="/" class="pa-2">
-          <v-icon left>mdi-home</v-icon>
-        </router-link>
-      </v-card>
-      <v-card class="pa-2">
-        <router-link to="/nova">
-          <v-icon left>mdi-plus-box</v-icon>
-        </router-link>
-      </v-card>
-      <v-card class="pa-2">
-        <router-link to="/perfil">
-          <v-icon left>mdi-account</v-icon>
-        </router-link>
-      </v-card>
-      <v-card class="pa-2">
-        <router-link to="/login">
-          <v-icon left>mdi-exit-to-app</v-icon>
-        </router-link>
-      </v-card>
-    </v-app-bar>-->
     <v-content>
       <v-container fluid fill-heigth>
         <router-view></router-view>

@@ -65,7 +65,7 @@ export default {
               foto: response.data.result[0]["foto"],
               bio: response.data.result[0]["bio"]
             });
-            router.push("/");
+            router.push("/perfil");
           } else {
             alert(response.data.message);
           }

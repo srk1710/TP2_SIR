@@ -28,7 +28,12 @@
         </center>
       </v-col>
       <v-col class="col-10">
-        <v-textarea v-model="descricao" name="input-4-1" label="Descrição" hint="Escreve uma legenda"></v-textarea>
+        <v-textarea
+          v-model="descricao"
+          name="input-4-1"
+          label="Descrição"
+          hint="Escreve uma legenda"
+        ></v-textarea>
       </v-col>
     </v-row>
     <br />
@@ -65,10 +70,14 @@ export default {
       this.fotoURL = URL.createObjectURL(event);
     },
     submitFiles() {
+      const este = this;
       var formData = new FormData();
       if (this.ficheiroSelecionado) {
         formData.append("foto", this.ficheiroSelecionado);
-        formData.append("user", this.$store.getters["userAtivo/getLista"][0].id);
+        formData.append(
+          "user",
+          this.$store.getters["userAtivo/getLista"][0].id
+        );
         formData.append("descricao", this.descricao);
         axios({
           method: "POST",
@@ -77,7 +86,12 @@ export default {
           data: formData
         })
           .then(function(response) {
-            console.log(response.data);
+            console.log(response);
+            este.$store.dispatch("publicacoesUser/add", {
+              foto: response.data.imagem,
+              descricao: este.descricao
+            });
+            router.push("/perfil");
           })
           .catch(function(error) {
             console.log(error);

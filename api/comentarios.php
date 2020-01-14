@@ -24,7 +24,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
         exit(0);
     }
 	
-	if(!isset($_POST['idUser'])){
+	if(!isset($_POST['idPub'])){
 		$response['errors'] = true;
 		$response['message'] = "Missing Parameteres";
 		die(json_encode($response));
@@ -32,9 +32,9 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 	
     try {
         $PDO->beginTransaction();
-        $query = "SELECT id, foto, descricao, data_publicacao FROM publicacoes WHERE id_user = :idUser ORDER BY id DESC";
+        $query = "SELECT username, id_user, nome, data, conteudo FROM comentarios, utilizadores WHERE id_user = utilizadores.id AND id_publicacao = :idPub";
         $stmt = $PDO->prepare($query);
-        $stmt->bindValue(':idUser', $_POST['idUser']);
+        $stmt->bindValue(':idPub', (int) $_POST['idPub']);
 
         $stmt->execute();
 
@@ -49,7 +49,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
             die(json_encode($response));
         } else {
             $response['errors'] = true;
-            $response['message'] = "Sem publicações";
+            $response['message'] = "Publicacao " . $_POST['idPub'] . " nao encontrada";
             die(json_encode($response));
         }
     } catch (PDOException $e) {

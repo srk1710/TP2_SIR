@@ -1,6 +1,6 @@
 <template>
   <div style="padding: 50px;">
-      <!-- CABECALHO -->
+    <!-- CABECALHO -->
     <v-row style="padding: 10px;">
       <v-img
         src="https://picsum.photos/id/11/500/300"
@@ -24,10 +24,15 @@
       ></v-img>
     </v-row>
     <!-- COMENTARIOS -->
-    <v-row>
-      
-    </v-row>
+    <v-row></v-row>
   </div>
 </template>
 <script>
+import axios from "axios";
+
+export default {
+  props: {
+    ID: Number
+  }
+}
 </script>

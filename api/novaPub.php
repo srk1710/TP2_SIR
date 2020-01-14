@@ -54,6 +54,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 
         $PDO->commit();
 		
+		$response['imagem'] = $imagem;
         $response['errors'] = false;
         die(json_encode($response));
        

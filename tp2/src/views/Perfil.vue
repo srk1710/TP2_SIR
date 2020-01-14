@@ -41,9 +41,9 @@
     </v-row>
     <!-- PUBLICAÇÕES -->
     <v-row>
-      <v-col v-for="(pub, index) in getPublicacoesUser" :key="index" class="col-md-4 pub">
+      <router-link v-for="(pub, index) in getPublicacoesUser" :key="index" :to="{ name: 'pub', params: {ID: pub.id } }" class="col-md-4 pub">
         <v-img class="publicacoes" :src="'http://localhost/SIR/TP2_SIR/fotos/' + pub.foto"></v-img>
-      </v-col>
+      </router-link>
     </v-row>
   </div>
 </template>
@@ -97,7 +97,7 @@ export default {
         .then(function(response) {
           if (!response.data.errors) {
             var tamanho = response.data.result.length;
-            for (var i = 0; i < tamanho; i++) {
+            for (var i = tamanho - 1; i >= 0; i--) {
               este.$store.dispatch("publicacoesUser/add", {
                 id: response.data.result[i]["id"],
                 foto: response.data.result[i]["foto"],
@@ -124,6 +124,10 @@ export default {
 .pub {
   width: 100%;
   padding: 10px;
+}
+.pub:hover{
+  opacity: 0.5;
+  cursor: pointer;
 }
 .perfil {
   border-radius: 50%;

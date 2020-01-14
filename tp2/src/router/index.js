@@ -23,6 +23,12 @@ const routes = [
     path: "/nova",
     name: "nova",
     component: () => import("../views/NovaPub.vue")
+  },
+  {
+    path: "/pub",
+    name: "pub",
+    component: () => import("../views/Publicacao.vue"),
+    props: true
   }
 ];
 

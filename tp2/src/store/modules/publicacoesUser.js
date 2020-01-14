@@ -6,7 +6,7 @@ const state = {
 //Retorna-nos algo dos dados
 const getters = {
     getLista: (state) => {
-        return state.data
+        return state.data.reverse();
     },
     existe: (state) => {
         if(state.data.length > 0){
