@@ -3,6 +3,9 @@ require_once 'connect.php';
 
 header("Content-Type: application/x-www-form-urlencoded; charset=UTF-8");
 
+error_reporting(0);
+ini_set(“display_errors”, 0 );
+
 if (isset($_SERVER['HTTP_ORIGIN'])) {
         // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
         // you want to allow, and if so:
@@ -16,7 +19,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 
         if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
             // may also be using PUT, PATCH, HEAD etc
-            header("Access-Control-Allow-Methods: GET, POST, OPTIONS");         
+            header("Access-Control-Allow-Methods: GET, POST, OPTIONS, FILE");         
 
         if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
             header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
@@ -24,34 +27,28 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
         exit(0);
     }
 	
-	if(!isset($_POST['idPub'])){
+	if(!isset($_POST['idPub']) && !isset($_POST['idUser']) && !isset($_FILES['conteudo'])){
 		$response['errors'] = true;
 		$response['message'] = "Missing Parameteres";
 		die(json_encode($response));
 	}
 	
     try {
+		
         $PDO->beginTransaction();
-        $query = "SELECT username, id_user, nome, data, conteudo FROM comentarios, utilizadores WHERE id_user = utilizadores.id AND id_publicacao = :idPub ORDER BY data";
-        $stmt = $PDO->prepare($query);
-        $stmt->bindValue(':idPub', (int) $_POST['idPub']);
-
+        $query = "INSERT INTO comentarios(id_publicacao, id_user, conteudo) VALUES (:idPub, :idUser, :conteudo)";
+		$stmt = $PDO->prepare($query);
+        $stmt->bindValue(':idPub', $_POST['idPub']);
+        $stmt->bindValue(':idUser', $_POST['idUser']);
+        $stmt->bindValue(':conteudo', $_POST['conteudo']);
         $stmt->execute();
 
-        $result = $stmt->fetchAll();
+        $PDO->commit();
 		
-		error_reporting(0);
-		ini_set(“display_errors”, 0 );
-		
-        if (count($result)) {
-            $response['errors'] = false;
-            $response['result'] = $result;
-            die(json_encode($response));
-        } else {
-            $response['errors'] = true;
-            $response['message'] = "Publicacao " . $_POST['idPub'] . " nao encontrada";
-            die(json_encode($response));
-        }
+		$response['imagem'] = $imagem;
+        $response['errors'] = false;
+        die(json_encode($response));
+       
     } catch (PDOException $e) {
         $response['errors'] = true;
         $response['message'] = $e->getMessage();

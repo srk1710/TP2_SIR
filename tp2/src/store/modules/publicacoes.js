@@ -17,6 +17,11 @@ const actions = {
     },
     remove({commit}, key){
         commit('remove', key);
+    },
+    clearAll({ commit }) {
+        for(var i = state.data.length; i >= 0; i--){
+            commit('remove', 0);
+        }
     }
 }
 

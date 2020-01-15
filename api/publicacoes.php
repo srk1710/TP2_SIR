@@ -26,7 +26,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 
     try {
         $PDO->beginTransaction();
-        $query = "SELECT * FROM publicacoes WHERE 1 = 1";
+        $query = "SELECT publicacoes.id AS idPub, id_user, data_publicacao AS data, publicacoes.foto AS fotoPub, descricao, utilizadores.nome AS nomeUser, username,  utilizadores.foto AS fotoUser FROM publicacoes, utilizadores WHERE id_user = utilizadores.id";
         $stmt = $PDO->prepare($query);
 
         $stmt->execute();

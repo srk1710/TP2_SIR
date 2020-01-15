@@ -93,41 +93,32 @@ export default {
   methods: {
     submitComent() {
       var comentarioP = document.getElementById("comentarios");
-      var conteudo = "";
-      conteudo += "<br><b>" + "Username" + "</b>";
-      conteudo += " ";
-      conteudo += this.novoComentario;
-      comentarioP.innerHTML += conteudo;
 
       const este = this;
-      var formData = new FormData();
-      if (this.ficheiroSelecionado) {
-        formData.append(
-          "user",
-          this.$store.getters["userAtivo/getLista"][0].id
-        );
-        formData.append("idPub", this.ID);
-        formData.append("novoComentario", this.novoComentario);
-        axios({
-          method: "POST",
-          //url: "http://192.168.64.2/api/novoComent.php",
-          url: "http://localhost/SIR/TP2_SIR/api/novoComent.php",
-          data: formData
+      var params = new URLSearchParams();
+      params.append("idUser", this.$store.getters["userAtivo/getLista"][0].id);
+      params.append("idPub", this.ID);
+      params.append("conteudo", this.novoComentario);
+      axios({
+        method: "POST",
+        //url: "http://192.168.64.2/api/novoComent.php",
+        url: "http://localhost/SIR/TP2_SIR/api/novoComent.php",
+        data: params
+      })
+        .then(function(response) {
+          console.log(response);
+          var conteudo = "";
+          conteudo +=
+            "<br><b>" +
+            este.$store.getters["userAtivo/getLista"][0].username +
+            "</b>";
+          conteudo += " ";
+          conteudo += este.novoComentario;
+          comentarioP.innerHTML += conteudo;
         })
-          .then(function(response) {
-            console.log(response);
-            este.$store.dispatch("publicacoesUser/add", {
-              foto: response.data.imagem,
-              descricao: este.descricao
-            });
-            router.push("/perfil");
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
-      } else {
-        console.log("Não seleccionou nenhum ficheiro...");
-      }
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   },
   mounted: function() {
@@ -192,11 +183,12 @@ export default {
           console.log(response.data.result);
           var conteudo = "";
           for (var i = 0; i < response.data.result.length; i++) {
-            conteudo += "<b>" + response.data.result[i].username + "</b>";
+            conteudo += "<br><b>" + response.data.result[i].username + "</b>";
             conteudo += " ";
             conteudo += response.data.result[i].conteudo;
           }
           comentarioP.innerHTML = conteudo;
+          
         } else {
           alert(response.data.message);
         }

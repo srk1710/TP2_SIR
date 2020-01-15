@@ -1,6 +1,22 @@
 <template>
-  <div class="home">
-    <Publicacao user="Welcome to Your Vue.js App" />
+  <div class="home" id="home">
+    <div
+      v-for="(pub, index) in getPublicacoes"
+      :key="index"
+      :to="{ name: 'pub', params: {ID: pub.idPub } }"
+      class="col-md-4 pubHome"
+    >
+      <Publicacao
+        :idUser="pub.idUser"
+        :idPub="pub.id"
+        :username="pub.username"
+        :nomeUser="pub.nomeUser"
+        :data="pub.data"
+        :descricao="pub.descricao"
+        :fotoUser="pub.fotoUser"
+        :fotoPub="pub.fotoPub"
+      />
+    </div>
   </div>
 </template>
 
@@ -18,37 +34,54 @@ export default {
     var existeOnline = this.$store.getters["userAtivo/existe"];
     if (!existeOnline) {
       router.push("/login");
-    }else{
+    } else {
       //this.importarPublicacoes();
     }
   },
-  methods: {
-    /*importarPublicacoes: function() {
-      const este = this;
-      var params = new URLSearchParams();
-      axios({
-        method: "GET",
-        //url: "http://192.168.64.2/api/publicacoes.php",
-        url: "http://localhost/SIR/TP2_SIR/api/login.php",
-      })
-        .then(function(response) {
-          if (!response.data.errors) {
-            console.log(response.data.result[0]);
+  computed: {
+    getPublicacoes() {
+      return this.$store.getters["publicacoes/getLista"];
+    }
+  },
+  mounted: function() {
+    var home = document.getElementById("home");
+    const este = this;
+    var params = new URLSearchParams();
+    axios({
+      method: "GET",
+      //url: "http://192.168.64.2/api/publicacoes.php",
+      url: "http://localhost/SIR/TP2_SIR/api/publicacoes.php"
+    })
+      .then(function(response) {
+        if (!response.data.errors) {
+          este.$store.dispatch("publicacoes/clearAll");
+          console.log(response.data.result);
+          var conteudo = "";
+          for (var i = 0; i < response.data.result.length; i++) {
             este.$store.dispatch("publicacoes/add", {
-              user: response.data.result[0]["id_user"],
-              data: response.data.result[0]["data_publicacao"],
-              foto: response.data.result[0]["foto"],
-              descricao: response.data.result[0]["descricao"]
+              idUser: response.data.result[i]["idUser"],
+              idPub: response.data.result[i]["idPub"],
+              username: response.data.result[i]["username"],
+              nomeUser: response.data.result[i]["nomeUser"],
+              data: response.data.result[i]["data"],
+              descricao: response.data.result[i]["descricao"],
+              fotoUser: response.data.result[i]["fotoUser"],
+              fotoPub: response.data.result[i]["fotoPub"]
             });
-            console.log(este.$store.getters["publicacoes/getLista"]);
-          } else {
-            alert(response.data.message);
           }
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    }*/
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 };
 </script>
+<style>
+.pubHome:hover{
+  cursor: pointer;
+  opacity: 0.8;
+}
+</style>
