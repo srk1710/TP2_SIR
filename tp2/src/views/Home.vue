@@ -4,7 +4,7 @@
       v-for="(pub, index) in getPublicacoes"
       :key="index"
       :to="{ name: 'pub', params: {ID: pub.idPub } }"
-      class="col-md-4 pubHome"
+      class="col-md-12 pubHome"
     >
       <Publicacao
         :idUser="pub.idUser"
@@ -80,6 +80,10 @@ export default {
 };
 </script>
 <style>
+.pubHome {
+  width: 100%;
+  padding: 10px;
+}
 .pubHome:hover{
   cursor: pointer;
   opacity: 0.8;
