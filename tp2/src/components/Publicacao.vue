@@ -18,14 +18,14 @@
     </v-row>
     <!-- FOTO -->
     <v-row>
-      <v-col class="col-md-6">
+      <router-link class="col-md-6" :to="{ name: 'pub', params: {ID: this.idPub } }">
         <v-img
           v-bind:src="'http://localhost/SIR/TP2_SIR/fotos/' + this.fotoPub"
           aspect-ratio="1"
           class="grey lighten-2"
           width="100%"
         ></v-img>
-      </v-col>
+      </router-link>
     </v-row>
     <v-row style="margin-left: 20px;">
       <p class="font-weight-black" style="font-family: Roboto;">

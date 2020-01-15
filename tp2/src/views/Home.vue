@@ -3,12 +3,11 @@
     <div
       v-for="(pub, index) in getPublicacoes"
       :key="index"
-      :to="{ name: 'pub', params: {ID: pub.idPub } }"
       class="col-md-12 pubHome"
     >
       <Publicacao
         :idUser="pub.idUser"
-        :idPub="pub.id"
+        :idPub="pub.idPub"
         :username="pub.username"
         :nomeUser="pub.nomeUser"
         :data="pub.data"

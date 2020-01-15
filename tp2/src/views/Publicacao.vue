@@ -161,7 +161,7 @@ export default {
           este.data =
             ultimaData[0] + " de " + meses[mesInt - 1] + " de " + data[0];
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch(function(error) {
@@ -190,7 +190,7 @@ export default {
           comentarioP.innerHTML = conteudo;
           
         } else {
-          alert(response.data.message);
+          console.log(response.data.message);
         }
       })
       .catch(function(error) {
