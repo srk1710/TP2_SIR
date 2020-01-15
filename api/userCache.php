@@ -23,22 +23,19 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 
         exit(0);
     }
-
-if (!isset($_POST['username']) || !isset($_POST['password'])) {
-    $response['errors'] = true;
-    $response['message'] = "Parâmetros em falta";
-    die(json_encode($response));
-} else {
-
+	
+	if(!isset($_POST['idUser'])){
+		$response['errors'] = true;
+		$response['message'] = "Missing Parameteres";
+		die(json_encode($response));
+	}
+	
     try {
         $PDO->beginTransaction();
-        $query = "SELECT (SELECT count(publicacoes.id) FROM publicacoes, utilizadores WHERE id_user = utilizadores.id AND username = :username1 && password = :password1) AS count, id, username, nome, email, data_nasc, foto, bio FROM utilizadores WHERE username = :username && password = :password";
+        $query = "SELECT (SELECT count(publicacoes.id) FROM publicacoes, utilizadores WHERE id_user = utilizadores.id AND id_user = :idUser1) AS count, publicacoes.id AS idPub, publicacoes.foto AS fotoPub, descricao, data_publicacao, username, bio, nome, utilizadores.foto AS fotoUser FROM publicacoes, utilizadores WHERE id_user = utilizadores.id AND id_user = :idUser ORDER BY publicacoes.id DESC";
         $stmt = $PDO->prepare($query);
-
-        $stmt->bindValue(":username1", $_POST['username']);
-        $stmt->bindValue(":password1", $_POST['password']);
-        $stmt->bindValue(":username", $_POST['username']);
-        $stmt->bindValue(":password", $_POST['password']);
+        $stmt->bindValue(':idUser1', $_POST['idUser']);
+        $stmt->bindValue(':idUser', $_POST['idUser']);
 
         $stmt->execute();
 
@@ -53,7 +50,7 @@ if (!isset($_POST['username']) || !isset($_POST['password'])) {
             die(json_encode($response));
         } else {
             $response['errors'] = true;
-            $response['message'] = "Dados errados";
+            $response['message'] = "Sem publicações para o user" . $_POST['idUser'];
             die(json_encode($response));
         }
     } catch (PDOException $e) {
@@ -61,4 +58,3 @@ if (!isset($_POST['username']) || !isset($_POST['password'])) {
         $response['message'] = $e->getMessage();
         die(json_encode($response));
     }
-}

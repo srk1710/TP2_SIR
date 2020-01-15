@@ -133,7 +133,9 @@ export default {
     })
       .then(function(response) {
         if (!response.data.errors) {
-          console.log(response.data);
+
+          //console.log(response.data);
+
           este.fotoPub = response.data.result[0].fotoPub;
           este.fotoUser = response.data.result[0].fotoUser;
           este.user = response.data.result[0].username;
@@ -180,7 +182,9 @@ export default {
     })
       .then(function(response) {
         if (!response.data.errors) {
-          console.log(response.data.result);
+
+          //console.log(response.data.result);
+
           var conteudo = "";
           for (var i = 0; i < response.data.result.length; i++) {
             conteudo += "<br><b>" + response.data.result[i].username + "</b>";
@@ -199,5 +203,3 @@ export default {
   }
 };
 </script>
-<style>
-</style>

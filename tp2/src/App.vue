@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-tabs style="position: fixed; z-index: 5000;" v-if="existe">
+    <v-tabs style="position: fixed; z-index: 50;" v-if="existe">
       <v-tab class="col-3">
         <router-link class="col-12" tag="div" to="/">
           <v-icon left>mdi-home</v-icon>
@@ -12,7 +12,7 @@
         </router-link>
       </v-tab>
       <v-tab class="col-3">
-        <router-link  class="col-12" tag="div" to="/perfil">
+        <router-link class="col-12" tag="div" to="/perfil">
           <v-icon left>mdi-account</v-icon>
         </router-link>
       </v-tab>
@@ -27,6 +27,9 @@
         <router-view></router-view>
       </v-container>
     </v-content>
+    <center>
+      <v-progress-circular id="progressCircular" :size="this.sizeProgress" :width="7" indeterminate></v-progress-circular>
+    </center>
   </div>
 </template>
 
@@ -34,9 +37,12 @@
 export default {
   name: "App",
 
-  data: () => ({
-    textLogin: "Login"
-  }),
+  data() {
+    return {
+      sizeProgress: 70,
+      textLogin: "Login"
+    };
+  },
   computed: {
     existe() {
       var existeOnline = this.$store.getters["userAtivo/existe"];
@@ -46,6 +52,9 @@ export default {
         return false;
       }
     }
+  },
+  mounted: function() {
+    this.sizeProgress = 0;
   }
 };
 </script>
@@ -61,5 +70,9 @@ h1 {
 #app {
   width: 100%;
   margin: auto;
+}
+v-progress-circular {
+  z-index: 9999;
+  visibility: hidden;
 }
 </style>

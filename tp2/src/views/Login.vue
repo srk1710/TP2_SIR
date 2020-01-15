@@ -55,7 +55,9 @@ export default {
       })
         .then(function(response) {
           if (!response.data.errors) {
-            console.log(response.data.result[0]);
+            
+            //console.log(response.data.result[0]);
+            
             este.$store.dispatch("userAtivo/add", {
               username: response.data.result[0]["username"],
               id: response.data.result[0]["id"],
@@ -63,7 +65,8 @@ export default {
               email: response.data.result[0]["email"],
               data_nasc: response.data.result[0]["data_nasc"],
               foto: response.data.result[0]["foto"],
-              bio: response.data.result[0]["bio"]
+              bio: response.data.result[0]["bio"],
+              publicacoes: response.data.result[0]["count"]
             });
             router.push("/perfil");
           } else {
@@ -78,6 +81,7 @@ export default {
   mounted: function() {
     this.$store.dispatch("userAtivo/remove", 0);
     this.$store.dispatch("publicacoesUser/clearAll");
+    this.sizeProgress = 0;
   }
 };
 </script>

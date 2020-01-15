@@ -41,7 +41,12 @@
     </v-row>
     <!-- PUBLICAÇÕES -->
     <v-row>
-      <router-link v-for="(pub, index) in getPublicacoesUser" :key="index" :to="{ name: 'pub', params: {ID: pub.id } }" class="col-md-4 pubPerfil">
+      <router-link
+        v-for="(pub, index) in getPublicacoesUser"
+        :key="index"
+        :to="{ name: 'pub', params: {ID: pub.id } }"
+        class="col-md-4 pub"
+      >
         <v-img class="publicacoes" :src="'http://localhost/SIR/TP2_SIR/fotos/' + pub.foto"></v-img>
       </router-link>
     </v-row>
@@ -54,57 +59,79 @@ import axios from "axios";
 import userAtivo from "../store/modules/utilizador";
 
 export default {
+  props: {
+    ID: {
+      type: String,
+      default: null,
+      required: true
+    }
+  },
   data: () => ({
     username: "",
     nome: "",
     bio: "",
     foto: "",
-    publicacoes: ""
+    publicacoes: "",
+    intCache: false
   }),
   computed: {
     getPublicacoesUser() {
-      return this.$store.getters["publicacoesUser/getLista"];
+      return this.$store.getters["userCache/getPublicacoes"];
     }
   },
   created: function() {
     var existeOnline = this.$store.getters["userAtivo/existe"];
     if (!existeOnline) {
       router.push("/login");
+    } else {
     }
   },
   mounted: function() {
     const este = this;
-    
-    var userLogado = this.$store.getters["userAtivo/getLista"];
-    this.username = userLogado[0].username;
-    this.nome = userLogado[0].nome;
-    this.bio = userLogado[0].bio;
-    this.foto = userLogado[0].foto;
-    this.publicacoes = userLogado[0].publicacoes;
 
-    if (!este.$store.getters["publicacoesUser/existe"]) {
+    this.$store.dispatch("userCache/clearAll");
+
+    if (!this.intCache) {
       var params = new URLSearchParams();
-      params.append("idUser", userLogado[0].id);
+      params.append("idUser", this.ID);
       axios({
         method: "POST",
-        //url: "http://192.168.64.2/api/publicacoesUser.php",
-        url: "http://localhost/SIR/TP2_SIR/api/publicacoesUser.php",
+        //url: "http://192.168.64.2/api/userCache.php",
+        url: "http://localhost/SIR/TP2_SIR/api/userCache.php",
         data: params
       })
         .then(function(response) {
           if (!response.data.errors) {
+            este.intCache = true;
+            console.log(response.data.result);
+
+            este.$store.dispatch("userCache/add", {
+              username: response.data.result[0]["username"],
+              nome: response.data.result[0]["nome"],
+              bio: response.data.result[0]["bio"],
+              foto: response.data.result[0]["fotoUser"],
+              publicacoes: response.data.result[0]["count"]
+            });
+
+            este.username = response.data.result[0]["username"];
+            este.nome = response.data.result[0]["nome"];
+            este.bio = response.data.result[0]["bio"];
+            este.foto = response.data.result[0]["fotoUser"];
+            este.publicacoes = response.data.result[0]["count"];
+
+
             var tamanho = response.data.result.length;
+
             for (var i = tamanho - 1; i >= 0; i--) {
-              este.$store.dispatch("publicacoesUser/add", {
-                id: response.data.result[i]["id"],
-                foto: response.data.result[i]["foto"],
+              este.$store.dispatch("userCache/addPub", {
+                id: response.data.result[i]["idPub"],
+                foto: response.data.result[i]["fotoPub"],
                 descricao: response.data.result[i]["descricao"],
-                data: response.data.result[i]["data"]
+                data: response.data.result[i]["data_publicacao"]
               });
             }
-            //console.log(este.$store.getters["publicacoesUser/getLista"]);
           } else {
-            alert(response.data.message);
+            console.log(response.data);
           }
         })
         .catch(function(error) {
@@ -118,11 +145,11 @@ export default {
 .publicacoes {
   height: 100%;
 }
-.pubPerfil {
+router-link {
   width: 100%;
   padding: 10px;
 }
-.pubPerfil:hover{
+router-link:hover {
   opacity: 0.5;
   cursor: pointer;
 }

@@ -1,7 +1,6 @@
 <template>
   <div style="padding: 50px;">
     <!-- CABECALHO -->
-    <!-- CABECALHO -->
     <v-row style="padding: 10px;">
       <v-img
         v-bind:src="this.fotoUser"
@@ -12,7 +11,13 @@
         align="middle"
       ></v-img>
       <div style="margin-left: 50px;">
-        <h2 class="font-weight-black" style="font-family: Roboto;">{{ this.username }}</h2>
+        <router-link
+          tag="h2"
+          class="font-weight-black pubName"
+          style="font-family: Roboto;"
+          :to="{ name: 'perfilGeral', params: {ID: this.idUser } }"
+        >{{ this.username }}
+        </router-link>
         <p class="font-weight-thin text-center" style="font-family: Roboto;">{{ this.nomeUser }}</p>
       </div>
     </v-row>
@@ -22,7 +27,7 @@
         <v-img
           v-bind:src="'http://localhost/SIR/TP2_SIR/fotos/' + this.fotoPub"
           aspect-ratio="1"
-          class="grey lighten-2"
+          class="grey lighten-2 pubFoto"
           width="100%"
         ></v-img>
       </router-link>
@@ -53,5 +58,19 @@ export default {
     descricao: String,
     data: String
   }
-}
+};
 </script>
+<style>
+.pubFoto {
+  width: 100%;
+  padding: 10px;
+}
+.pubFoto:hover{
+  opacity: 0.8;
+  cursor: pointer;
+}
+.pubName:hover{
+  opacity: 0.5;
+  cursor: pointer;
+}
+</style>

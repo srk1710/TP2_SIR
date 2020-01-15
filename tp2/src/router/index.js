@@ -29,6 +29,12 @@ const routes = [
     name: "pub",
     component: () => import("../views/Publicacao.vue"),
     props: true
+  },
+  {
+    path: "/p",
+    name: "perfilGeral",
+    component: () => import("../views/PerfilGeral.vue"),
+    props: true
   }
 ];
 
@@ -37,5 +43,16 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+
+router.beforeResolve((to, from, next) => {
+  if (to.name) {
+      NProgress.start()
+  }
+  next()
+})
+
+router.afterEach((to, from) => {
+  NProgress.done()
+})
 
 export default router;
