@@ -108,8 +108,8 @@ export default {
       );
       axios({
         method: "POST",
-        url: "http://192.168.64.2/API/api/userCache.php",
-        // url: "http://localhost/SIR/TP2_SIR/api/userCache.php",
+        //url: "http://192.168.64.2/API/api/userCache.php",
+        url: "http://localhost/SIR/TP2_SIR/api/userCache.php",
         data: params
       })
         .then(function(response) {
@@ -159,6 +159,9 @@ export default {
   },
   methods: {
     seguir() {
+
+      const este = this;
+
       var params = new URLSearchParams();
 
       if (this.seguirBTN === "Seguir") {

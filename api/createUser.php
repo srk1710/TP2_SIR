@@ -27,7 +27,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
         exit(0);
     }
 	
-	if(!isset($_POST['user']) && !isset($_POST['email']) && !isset($_POST['date']) && !isset($_POST['nome']) && !isset($_POST['password'])){
+	if(!isset($_POST['user']) || !isset($_POST['email']) || !isset($_POST['date']) || !isset($_POST['nome']) || !isset($_POST['password'])){
 		$response['errors'] = true;
 		$response['message'] = "Missing Parameteres";
 		die(json_encode($response));

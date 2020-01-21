@@ -27,7 +27,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
         exit(0);
     }
 	
-	if(!isset($_POST['idPub']) && !isset($_POST['idUser']) && !isset($_FILES['conteudo'])){
+	if(!isset($_POST['idPub']) || !isset($_POST['idUser']) || !isset($_FILES['conteudo'])){
 		$response['errors'] = true;
 		$response['message'] = "Missing Parameteres";
 		die(json_encode($response));
