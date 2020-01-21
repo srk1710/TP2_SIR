@@ -32,7 +32,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 	
     try {
         $PDO->beginTransaction();
-        $query = "SELECT id, foto, descricao, data_publicacao FROM publicacoes WHERE id_user = :idUser ORDER BY id DESC";
+        $query = "SELECT id, foto, descricao, data_publicacao FROM publicacoes WHERE id_user = :idUser ORDER BY id ASC";
         $stmt = $PDO->prepare($query);
         $stmt->bindValue(':idUser', $_POST['idUser']);
 

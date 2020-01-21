@@ -10,9 +10,9 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field label="User" v-model="user" prepend-icon="mdi-at" type="text"></v-text-field>
+                  <v-text-field label="Nome de Utilizador" v-model="user" prepend-icon="mdi-account" type="text"></v-text-field>
                   <v-text-field
-                    label="Password"
+                    label="Palavra-Passe"
                     v-model="password"
                     prepend-icon="mdi-lock"
                     type="password"
@@ -71,7 +71,7 @@ export default {
               seguidores: response.data.result[0]["seguidores"],
               aSeguir: response.data.result[0]["aSeguir"]
             });
-            router.push("/");
+            router.push("/perfil");
           } else {
             alert(response.data.message);
           }

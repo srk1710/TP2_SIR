@@ -143,7 +143,7 @@ export default {
         .then(function(response) {
           if (!response.data.errors) {
             var tamanho = response.data.result.length;
-            for (var i = tamanho - 1; i >= 0; i--) {
+            for (var i = 0; i < tamanho; i++) {
               este.$store.dispatch("publicacoesUser/add", {
                 id: response.data.result[i]["id"],
                 foto: response.data.result[i]["foto"],
