@@ -20,8 +20,9 @@
                 </v-form>
               </v-card-text>
               <v-card-actions>
+                <v-btn color="primary" @clicl="registar()">Registar</v-btn>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="validar()">Login</v-btn>
+                <v-btn color="primary" @click="validar()">Entrar</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -76,6 +77,9 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
+    },
+    registar(){
+        router.push("/registar");
     }
   },
   mounted: function() {
