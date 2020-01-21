@@ -4,7 +4,7 @@ require_once 'connect.php';
 header("Content-Type: application/x-www-form-urlencoded; charset=UTF-8");
 
 error_reporting(0);
-ini_set(“display_errors”, 0 );
+ini_set("display_errors", 0 );
 
 if (isset($_SERVER['HTTP_ORIGIN'])) {
         // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one

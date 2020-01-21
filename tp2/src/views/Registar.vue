@@ -138,8 +138,8 @@ export default {
 
           axios({
             method: "POST",
-            url: "http://192.168.64.2/API/api/createUser.php",
-            // url: "http://localhost/SIR/TP2_SIR/api/createUser.php",
+            // url: "http://192.168.64.2/API/api/createUser.php",
+            url: "http://localhost/SIR/TP2_SIR/api/createUser.php",
             data: params
           })
             .then(function(response) {
@@ -172,8 +172,8 @@ export default {
     params.append("string", "");
     axios({
       method: "POST",
-      url: "http://192.168.64.2/API/api/listaUser.php",
-      // url: "http://localhost/SIR/TP2_SIR/api/listaUser.php",
+      //url: "http://192.168.64.2/API/api/listaUser.php",
+      url: "http://localhost/SIR/TP2_SIR/api/listaUser.php",
       data: params
     })
       .then(function(response) {

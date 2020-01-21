@@ -115,7 +115,6 @@ export default {
         .then(function(response) {
           if (!response.data.errors) {
             este.intCache = true;
-            console.log(response.data.result);
 
             este.$store.dispatch("userCache/add", {
               username: response.data.result[0]["username"],
@@ -133,7 +132,7 @@ export default {
             este.foto = response.data.result[0]["fotoUser"];
             este.publicacoes = response.data.result[0]["count"];
             este.idUser = response.data.result[0]["idUser"];
-            if (!response.data.result[0]["segue"]) {
+            if (response.data.result[0]["segue"]) {
               este.seguirBTN = "A seguir";
               este.seguirColor = "";
             }
@@ -165,15 +164,16 @@ export default {
       var params = new URLSearchParams();
 
       if (this.seguirBTN === "Seguir") {
-        params.append("seguir", true);
+        params.append("seguir", "true");
       } else {
-        params.append("seguir", false);
+        params.append("seguir", "false");
       }
       params.append("idSegue", this.$store.getters["userAtivo/getLista"][0].id);
       params.append("idSeguido", this.idUser);
+
       axios({
         method: "POST",
-        //url: "http://192.168.64.2/API/api/seguirUser.php",
+        // url: "http://192.168.64.2/API/api/seguirUser.php",
         url: "http://localhost/SIR/TP2_SIR/api/seguirUser.php",
         data: params
       })

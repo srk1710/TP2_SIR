@@ -18,19 +18,19 @@
     <!-- FOTO -->
     <v-row>
       <v-col class="col-md-6">
-        <!-- <v-img
+        <v-img
            v-bind:src="'http://localhost/SIR/TP2_SIR/fotos/' + this.fotoPub"  
           aspect-ratio="1"
           class="grey lighten-2"
           width="100%"
-        ></v-img> -->
+        ></v-img>
 
-        <v-img
+        <!-- <v-img
            v-bind:src="'http://192.168.64.2/API/fotos/' + this.fotoPub"  
           aspect-ratio="1"
           class="grey lighten-2"
           width="100%"
-        ></v-img>
+        ></v-img> -->
       </v-col>
     </v-row>
     <v-row style="margin-left: 20px;">
