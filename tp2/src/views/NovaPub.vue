@@ -81,8 +81,8 @@ export default {
         formData.append("descricao", this.descricao);
         axios({
           method: "POST",
-          //url: "http://192.168.64.2/API/api/novaPub.php",
-          url: "http://localhost/SIR/TP2_SIR/api/novaPub.php",
+          url: "http://192.168.64.2/API/api/novaPub.php",
+          // url: "http://localhost/SIR/TP2_SIR/api/novaPub.php",
           data: formData
         })
           .then(function(response) {

@@ -143,7 +143,13 @@ export default {
             data: params
           })
             .then(function(response) {
-                router.push("/login");
+               console.log(response);
+               if(response.data.errors){
+                   console.log(response.data.message);
+               }
+               else{
+                   router.push("/login");
+               }
             })
             .catch(function(error) {
               console.log(error);
