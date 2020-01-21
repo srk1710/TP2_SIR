@@ -10,9 +10,35 @@
         ></v-text-field>
       </v-col>
     </v-row>
-    <v-row v-for="(pub, index) in getPublicacoes" :key="index" class="col-md-12">
-      {{listaUtilizadores}}
-    </v-row>
+    <router-link
+      v-for="(user, index) in listaUtilizadores"
+      :key="index"
+      class="row linhaSearch"
+      tag="v-row"
+      :to="{ name: 'perfilGeral', params: {ID: user.id } }"
+    >
+      <table>
+        <tr>
+          <td rowspan="2">
+            <v-img
+              v-bind:src="user.foto"
+              class="grey lighten-2"
+              max-width="60px"
+              style="border-radius: 50%"
+              align="middle"
+            ></v-img>
+          </td>
+          <td>
+            <h2>{{user.username}}</h2>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <i>{{user.nome}}</i>
+          </td>
+        </tr>
+      </table>
+    </router-link>
   </div>
 </template>
 <script>
@@ -34,9 +60,11 @@ export default {
   },
   methods: {
     changeProcurar() {
-      this.listaUtilizadores = [];
 
       const este = this;
+
+      este.listaUtilizadores = [];
+
       var params = new URLSearchParams();
       params.append("string", this.aProcurar);
       if (this.aProcurar !== "") {
@@ -49,12 +77,19 @@ export default {
           .then(function(response) {
             if (!response.data.errors) {
               var tamanho = response.data.result.length;
+              var userTMP = {};
+
+              este.listaUtilizadores = [];
+
               for (var i = 0; i < tamanho; i++) {
-                var user = {};
-                user.nome = response.data.result[i].nome;
-                user.id = response.data.result[i].id;
-                user.foto = response.data.result[i].foto;
-                este.listaUtilizadores.push(user);
+                userTMP = {};
+                userTMP.nome = response.data.result[i].nome;
+                userTMP.username = response.data.result[i].username;
+                userTMP.id = response.data.result[i].id;
+                userTMP.foto = response.data.result[i].foto;
+                if (este.listaUtilizadores.indexOf(userTMP) < 0) {
+                  este.listaUtilizadores.push(userTMP);
+                }
               }
             } else {
               console.log(response.data.message);
@@ -68,3 +103,9 @@ export default {
   }
 };
 </script>
+<style>
+.linhaSearch:hover {
+  cursor: pointer;
+  background: whitesmoke;
+}
+</style>
