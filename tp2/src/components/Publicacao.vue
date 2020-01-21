@@ -24,19 +24,19 @@
     <!-- FOTO -->
     <v-row>
       <router-link class="col-md-6" :to="{ name: 'pub', params: {ID: this.idPub } }">
-        <!-- <v-img
+        <v-img
           v-bind:src="'http://localhost/SIR/TP2_SIR/fotos/' + this.fotoPub"
           aspect-ratio="1"
           class="grey lighten-2 pubFoto"
           width="100%"
-        ></v-img> -->
+        ></v-img>
 
-        <v-img
+        <!-- <v-img
           v-bind:src="'http://192.168.64.2/API/fotos/' + this.fotoPub"
           aspect-ratio="1"
           class="grey lighten-2 pubFoto"
           width="100%"
-        ></v-img>
+        ></v-img> -->
       </router-link>
     </v-row>
     <v-row style="margin-left: 20px;">

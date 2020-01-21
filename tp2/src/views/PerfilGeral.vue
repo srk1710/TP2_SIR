@@ -47,8 +47,8 @@
         :to="{ name: 'pub', params: {ID: pub.id } }"
         class="col-md-4 pub"
       >
-      <v-img class="publicacoes" :src="'http://192.168.64.2/API/fotos/' + pub.foto"></v-img>
-      <!--  <v-img class="publicacoes" :src="'http://localhost/SIR/TP2_SIR/fotos/' + pub.foto"></v-img>  -->
+      <!--<v-img class="publicacoes" :src="'http://192.168.64.2/API/fotos/' + pub.foto"></v-img>-->
+      <v-img class="publicacoes" :src="'http://localhost/SIR/TP2_SIR/fotos/' + pub.foto"></v-img>
       </router-link>
     </v-row>
   </div>
@@ -97,8 +97,8 @@ export default {
       params.append("idUser", this.ID);
       axios({
         method: "POST",
-        url: "http://192.168.64.2/API/api/userCache.php",
-       // url: "http://localhost/SIR/TP2_SIR/api/userCache.php",
+        //url: "http://192.168.64.2/API/api/userCache.php",
+        url: "http://localhost/SIR/TP2_SIR/api/userCache.php",
         data: params
       })
         .then(function(response) {
