@@ -43,10 +43,12 @@ export default {
     var home = document.getElementById("home");
     const este = this;
     var params = new URLSearchParams();
+      params.append("idLogado", this.$store.getters["userAtivo/getLista"][0].id);
     axios({
-      method: "GET",
+      method: "POST",
       //url: "http://192.168.64.2/API/api/publicacoes.php"
-      url: "http://localhost/SIR/TP2_SIR/api/publicacoes.php"
+      url: "http://localhost/SIR/TP2_SIR/api/publicacoes.php",
+      data: params
     })
       .then(function(response) {
         if (!response.data.errors) {

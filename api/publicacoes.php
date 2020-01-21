@@ -23,11 +23,20 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 
         exit(0);
     }
+	
+if (!isset($_POST['idLogado'])) {
+    $response['errors'] = true;
+    $response['message'] = "Missing Parameteres";
+    die(json_encode($response));
+}
 
     try {
         $PDO->beginTransaction();
-        $query = "SELECT publicacoes.id AS idPub, id_user, data_publicacao AS data, publicacoes.foto AS fotoPub, descricao, utilizadores.nome AS nomeUser, username,  utilizadores.foto AS fotoUser FROM publicacoes, utilizadores WHERE id_user = utilizadores.id ORDER BY publicacoes.id DESC";
+        $query = "SELECT publicacoes.id AS idPub, id_user, data_publicacao AS data, publicacoes.foto AS fotoPub, descricao, utilizadores.nome AS nomeUser, username,  utilizadores.foto AS fotoUser FROM publicacoes, utilizadores WHERE id_user = utilizadores.id AND (utilizadores.id IN (SELECT id_seguido FROM seguir WHERE id_segue = :idLogado) || utilizadores.id = :idLogado2) ORDER BY publicacoes.id DESC";
         $stmt = $PDO->prepare($query);
+		
+        $stmt->bindValue(':idLogado', $_POST['idLogado']);
+        $stmt->bindValue(':idLogado2', $_POST['idLogado']);
 
         $stmt->execute();
 
