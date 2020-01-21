@@ -32,7 +32,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 	
     try {
         $PDO->beginTransaction();
-        $query = "SELECT * FROM utilizadores WHERE id LIKE :string1 OR nome LIKE :string2";
+        $query = "SELECT * FROM utilizadores WHERE id LIKE :string1 OR nome LIKE :string2 GROUP BY id";
         $stmt = $PDO->prepare($query);
         $stmt->bindValue(':string1', "%".$_POST['string']."%");
         $stmt->bindValue(':string2', "%".$_POST['string']."%");
