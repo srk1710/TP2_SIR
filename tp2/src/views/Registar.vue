@@ -10,52 +10,74 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field label="Nome" v-model="nome" prepend-icon="mdi-account-box" type="text"></v-text-field>
-                  <v-text-field label="Email" v-model="email" prepend-icon="mdi-at" type="text"></v-text-field>
-                   <v-row>
-    <v-col cols="12" sm="6" md="4">
-      <v-dialog
-        ref="dialog"
-        v-model="modal"
-        :return-value.sync="date"
-        persistent
-        width="290px"
-      >
-        <template v-slot:activator="{ on }">
-          <v-text-field
-            v-model="date"
-            label="Data de Nascimento"
-            prepend-icon="mdi-calendar"
-            readonly
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker v-model="date" autocomplete="off" scrollable>
-          <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
-          <v-btn text color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
-        </v-date-picker>
-      </v-dialog>
-    </v-col>
-  </v-row>
-                  <v-text-field label="Nome de Utilizador" v-model="user" prepend-icon="mdi-account" type="text"></v-text-field>
+                  <v-text-field
+                    label="Nome de Utilizador"
+                    v-model="user"
+                    prepend-icon="mdi-account"
+                    type="text"
+                    :rules="formRules"
+                    required
+                    @change="verificaNome"
+                  ></v-text-field>
+                  <v-text-field
+                    label="Nome"
+                    v-model="nome"
+                    prepend-icon="mdi-account-box"
+                    type="text"
+                    :rules="formRules"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    label="Email"
+                    v-model="email"
+                    prepend-icon="mdi-at"
+                    type="text"
+                    :rules="formRules"
+                    required
+                  ></v-text-field>
+                  <v-dialog
+                    ref="dialog"
+                    v-model="modal"
+                    :return-value.sync="date"
+                    persistent
+                    :rules="formRules"
+                    required
+                    width="290px"
+                  >
+                    <template v-slot:activator="{ on }">
+                      <v-text-field
+                        v-model="date"
+                        label="Data de Nascimento"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker v-model="date" autocomplete="off" scrollable>
+                      <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
+                      <v-btn text color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
+                    </v-date-picker>
+                  </v-dialog>
                   <v-text-field
                     label="Password"
                     v-model="password"
                     prepend-icon="mdi-lock"
                     type="password"
+                    :rules="formRules"
+                    required
                   ></v-text-field>
-                    <v-text-field
+                  <v-text-field
                     label="Confirme a Password"
                     v-model="password1"
                     prepend-icon="mdi-lock"
                     type="password"
+                    :rules="formRules"
+                    required
                   ></v-text-field>
-
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                  <v-btn color="primary" @click="retroceder()">Retroceder</v-btn>
+                <v-btn color="primary" @click="retroceder()">Retroceder</v-btn>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" @click="validarRegisto()">Registar</v-btn>
               </v-card-actions>
@@ -71,42 +93,101 @@
 import router from "../router";
 import axios from "axios";
 
-
 export default {
-    data: () => ({
-      date: new Date().toISOString().substr(0, 10),
-      menu: false,
-      modal: false,
-      menu2: false,
-      nome: "",
-      email: "",
-      date: "",
-      user: "",
-      password: "",
-      password1: "",
-      listaUsers: []  
-    }),
-  methods: { 
-    validarRegisto(){
-        console.log(this.nome);
-        if(this.password==this.password1){
-
+  data: () => ({
+    date: new Date().toISOString().substr(0, 10),
+    valid: true,
+    menu: false,
+    modal: false,
+    menu2: false,
+    nome: "",
+    email: "",
+    date: "",
+    user: "",
+    password: "",
+    password1: "",
+    listaUsers: [],
+    formRules: [v => !!v || "Campo Obrigatório"]
+  }),
+  methods: {
+    verificaNome() {
+      for (var i = 0; i < this.listaUsers.length; i++) {
+        if (this.user === this.listaUsers[i]) {
+          alert("Nome de Utilizador já existe");
+          this.user = "";
         }
-    },  
-    retroceder(){
-        router.push("/login");
+      }
+    },
+    validarRegisto() {
+      if (
+        this.user &&
+        this.email &&
+        this.date &&
+        this.nome &&
+        this.password &&
+        this.password1
+      ) {
+        if (this.password === this.password1) {
+          const este = this;
+          var params = new URLSearchParams();
+          params.append("user", this.user);
+          params.append("email", this.email);
+          params.append("date", this.date);
+          params.append("nome", this.nome);
+          params.append("password", this.password);
+
+          axios({
+            method: "POST",
+            url: "http://192.168.64.2/API/api/createUser.php",
+            // url: "http://localhost/SIR/TP2_SIR/api/createUser.php",
+            data: params
+          })
+            .then(function(response) {
+               console.log(response);
+               if(response.data.errors){
+                   console.log(response.data.message);
+               }
+               else{
+                   router.push("/login");
+               }
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+        } else {
+          alert("Passwords não coincidem.");
+          this.password = "";
+          this.password1 = "";
+        }
+      }
+    },
+    retroceder() {
+      router.push("/login");
     }
   },
-  created: function(){
-      var params = new URLSearchParams();
-      params.append("string", "");
-      axios({
-          method:"POST",
-          url: "http://192.168.64.2/API/api/userCache.php",
-          // url: "http://localhost/SIR/TP2_SIR/api/userCache.php",
-          data: params
-    
+  created: function() {
+    const este = this;
+
+    var params = new URLSearchParams();
+    params.append("string", "");
+    axios({
+      method: "POST",
+      url: "http://192.168.64.2/API/api/listaUser.php",
+      // url: "http://localhost/SIR/TP2_SIR/api/listaUser.php",
+      data: params
+    })
+      .then(function(response) {
+        if (response.data.error) {
+          console.log(response.data.message);
+        } else {
+          for (var i = 0; i < response.data.result.length; i++) {
+            este.listaUsers.push(response.data.result[i].username);
+          }
+        }
       })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 };
 </script>

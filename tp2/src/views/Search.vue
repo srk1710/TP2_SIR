@@ -70,8 +70,8 @@ export default {
       if (this.aProcurar !== "") {
         axios({
           method: "POST",
-          //url: "http://192.168.64.2/API/api/listaUser.php",
-          url: "http://localhost/SIR/TP2_SIR/api/listaUser.php",
+          url: "http://192.168.64.2/API/api/listaUser.php",
+          // url: "http://localhost/SIR/TP2_SIR/api/listaUser.php",
           data: params
         })
           .then(function(response) {

@@ -18,19 +18,19 @@
     <!-- FOTO -->
     <v-row>
       <v-col class="col-md-6">
-        <v-img
+        <!-- <v-img
            v-bind:src="'http://localhost/SIR/TP2_SIR/fotos/' + this.fotoPub"  
           aspect-ratio="1"
           class="grey lighten-2"
           width="100%"
-        ></v-img>
+        ></v-img> -->
 
-        <!-- <v-img
+        <v-img
            v-bind:src="'http://192.168.64.2/API/fotos/' + this.fotoPub"  
           aspect-ratio="1"
           class="grey lighten-2"
           width="100%"
-        ></v-img> -->
+        ></v-img>
       </v-col>
     </v-row>
     <v-row style="margin-left: 20px;">
@@ -108,8 +108,8 @@ export default {
       params.append("conteudo", this.novoComentario);
       axios({
         method: "POST",
-        url: "http://192.168.64.2/API/api/novoComent.php",
-        // url: "http://localhost/SIR/TP2_SIR/api/novoComent.php",
+        // url: "http://192.168.64.2/API/api/novoComent.php",
+        url: "http://localhost/SIR/TP2_SIR/api/novoComent.php",
         data: params
       })
         .then(function(response) {
@@ -134,8 +134,8 @@ export default {
     params.append("idPub", this.ID);
     axios({
       method: "POST",
-      url: "http://192.168.64.2/API/api/publicacao.php",
-     // url: "http://localhost/SIR/TP2_SIR/api/publicacao.php",
+      // url: "http://192.168.64.2/API/api/publicacao.php",
+     url: "http://localhost/SIR/TP2_SIR/api/publicacao.php",
       data: params
     })
       .then(function(response) {
@@ -183,8 +183,8 @@ export default {
     params.append("idPub", this.ID);
     axios({
       method: "POST",
-      url: "http://192.168.64.2/API/api/comentarios.php",
-      // url: "http://localhost/SIR/TP2_SIR/api/comentarios.php",
+      // url: "http://192.168.64.2/API/api/comentarios.php",
+      url: "http://localhost/SIR/TP2_SIR/api/comentarios.php",
       data: params
     })
       .then(function(response) {
