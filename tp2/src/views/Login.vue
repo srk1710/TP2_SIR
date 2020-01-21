@@ -20,7 +20,7 @@
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                <v-btn color="primary" @clicl="registar()">Registar</v-btn>
+                <v-btn color="primary" @click="registar()">Registar</v-btn>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" @click="validar()">Entrar</v-btn>
               </v-card-actions>
