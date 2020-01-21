@@ -31,7 +31,7 @@ if ($_POST['seguir']) {
         exit(0);
     }
 
-    if (!isset($_POST['segue']) && !isset($_POST['seguido'])) {
+    if (!isset($_POST['idSegue']) && !isset($_POST['idSeguido'])) {
         $response['errors'] = true;
         $response['message'] = "Missing Parameteres";
         die(json_encode($response));
@@ -42,8 +42,8 @@ if ($_POST['seguir']) {
         $PDO->beginTransaction();
         $query = "INSERT INTO seguir (id_segue, id_seguido) VALUES (:id_segue, :id_seguido)";
         $stmt = $PDO->prepare($query);
-        $stmt->bindValue(':id_segue', $_POST['segue']);
-        $stmt->bindValue(':id_seguido', $_POST['seguido']);
+        $stmt->bindValue(':id_segue', $_POST['idSegue']);
+        $stmt->bindValue(':id_seguido', $_POST['idSeguido']);
         $stmt->execute();
         $PDO->commit();
 
@@ -81,7 +81,7 @@ if ($_POST['seguir']) {
         exit(0);
     }
 
-    if (!isset($_POST['segue']) && !isset($_POST['seguido'])) {
+    if (!isset($_POST['idSegue']) && !isset($_POST['idSeguido'])) {
         $response['errors'] = true;
         $response['message'] = "Missing Parameteres";
         die(json_encode($response));
@@ -92,8 +92,8 @@ if ($_POST['seguir']) {
         $PDO->beginTransaction();
         $query = "DELETE FROM seguir WHERE id_segue=:id_segue AND id_seguido=:id_seguido";
         $stmt = $PDO->prepare($query);
-        $stmt->bindValue(':id_segue', $_POST['segue']);
-        $stmt->bindValue(':id_seguido', $_POST['seguido']);
+        $stmt->bindValue(':id_segue', $_POST['idSegue']);
+        $stmt->bindValue(':id_seguido', $_POST['idSeguido']);
         $stmt->execute();
         $PDO->commit();
 
