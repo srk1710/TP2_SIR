@@ -16,7 +16,7 @@
       </v-col>
       <v-col style="margin-top: 50px;">
         <v-row class="d-flex justify-center mb-6">
-          <h1 class="font-weight-black" style="font-family: Roboto;">1600</h1>
+          <h1 class="font-weight-black" style="font-family: Roboto;">{{this.seguidores}}</h1>
         </v-row>
         <v-row class="d-flex justify-center mb-6">
           <p class="font-weight-thin text-center" style="font-family: Roboto;">Seguidores</p>
@@ -24,7 +24,7 @@
       </v-col>
       <v-col style="margin-top: 50px;">
         <v-row class="d-flex justify-center mb-6">
-          <h1 class="font-weight-black" style="font-family: Roboto;">2240</h1>
+          <h1 class="font-weight-black" style="font-family: Roboto;">{{this.aSeguir}}</h1>
         </v-row>
         <v-row class="d-flex justify-center mb-6">
           <p class="font-weight-thin text-center" style="font-family: Roboto;">A seguir</p>
@@ -79,7 +79,9 @@ export default {
     publicacoes: "",
     intCache: false,
     seguirBTN: "Seguir",
-    seguirColor: "primary"
+    seguirColor: "primary",
+    seguidores: "",
+    aSeguir: ""
   }),
   computed: {
     getPublicacoesUser() {
@@ -131,6 +133,8 @@ export default {
             este.bio = response.data.result[0]["bio"];
             este.foto = response.data.result[0]["fotoUser"];
             este.publicacoes = response.data.result[0]["count"];
+            este.seguidores = response.data.result[0]["seguidores"];
+            este.aSeguir = response.data.result[0]["aSeguir"];
             este.idUser = response.data.result[0]["idUser"];
             if (response.data.result[0]["segue"]) {
               este.seguirBTN = "A seguir";

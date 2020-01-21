@@ -32,11 +32,17 @@ if (!isset($_POST['username']) || !isset($_POST['password'])) {
 
     try {
         $PDO->beginTransaction();
-        $query = "SELECT (SELECT count(publicacoes.id) FROM publicacoes, utilizadores WHERE id_user = utilizadores.id AND username = :username1 && password = :password1) AS count, id, username, nome, email, data_nasc, foto, bio FROM utilizadores WHERE username = :username && password = :password";
+        $query = "SELECT (SELECT count(publicacoes.id) FROM publicacoes, utilizadores WHERE id_user = utilizadores.id AND username = :username1) AS count,
+		(SELECT count(id_segue) FROM seguir, utilizadores WHERE id_seguido = utilizadores.id AND username = :userA) AS seguidores,
+		(SELECT count(id_seguido) FROM seguir, utilizadores WHERE id_segue = utilizadores.id AND username = :userB) AS aSeguir,
+		id, username, nome, email, data_nasc, foto, bio FROM utilizadores WHERE username = :username && password = :password";
         $stmt = $PDO->prepare($query);
 
         $stmt->bindValue(":username1", $_POST['username']);
-        $stmt->bindValue(":password1", $_POST['password']);
+		
+        $stmt->bindValue(":userA", $_POST['username']);
+        $stmt->bindValue(":userB", $_POST['username']);
+		
         $stmt->bindValue(":username", $_POST['username']);
         $stmt->bindValue(":password", $_POST['password']);
 

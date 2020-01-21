@@ -67,7 +67,9 @@ export default {
               data_nasc: response.data.result[0]["data_nasc"],
               foto: response.data.result[0]["foto"],
               bio: response.data.result[0]["bio"],
-              publicacoes: response.data.result[0]["count"]
+              publicacoes: response.data.result[0]["count"],
+              seguidores: response.data.result[0]["seguidores"],
+              aSeguir: response.data.result[0]["aSeguir"]
             });
             router.push("/");
           } else {

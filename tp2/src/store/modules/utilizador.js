@@ -20,6 +20,9 @@ const actions = {
     },
     remove({commit}, key){
         commit('remove', key);
+    },
+    set({commit}, params){
+        commit('set', params);
     }
 }
 
@@ -29,7 +32,10 @@ const mutations = {
         state.data.push(params);
     },
     remove(state, key){
-        state.data.splice( key, 1 );
+        state.data.splice( key, 1);
+    },
+    set(state, params){
+        state.data[0] = params;
     }
 }
 

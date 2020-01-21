@@ -32,13 +32,19 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 	
     try {
         $PDO->beginTransaction();
-        $query = "SELECT (SELECT CASE WHEN id_segue = :idLogado AND id_seguido = :idUser2 THEN true ELSE false END AS existe FROM seguir WHERE id_segue = :idLogado0 AND id_seguido = :idUser0) AS segue, (SELECT count(publicacoes.id) FROM publicacoes, utilizadores WHERE id_user = utilizadores.id AND id_user = :idUser1) AS count, publicacoes.id AS idPub, publicacoes.foto AS fotoPub, descricao, data_publicacao, username, bio, nome, utilizadores.foto AS fotoUser, utilizadores.id AS idUser FROM publicacoes, utilizadores WHERE id_user = utilizadores.id AND id_user = :idUser ORDER BY publicacoes.id DESC";
+        $query = "SELECT (SELECT CASE WHEN id_segue = :idLogado AND id_seguido = :idUser2 THEN true ELSE false END AS existe FROM seguir WHERE id_segue = :idLogado0 AND id_seguido = :idUser0) AS segue,
+		(SELECT count(id_segue) FROM seguir WHERE id_seguido = :userA) AS seguidores,
+		(SELECT count(id_seguido) FROM seguir WHERE id_segue = :userB) AS aSeguir,
+		(SELECT count(publicacoes.id) FROM publicacoes, utilizadores WHERE id_user = utilizadores.id AND id_user = :idUser1) AS count, publicacoes.id AS idPub, publicacoes.foto AS fotoPub, descricao, data_publicacao, username, bio, nome, utilizadores.foto AS fotoUser, utilizadores.id AS idUser FROM publicacoes, utilizadores WHERE id_user = utilizadores.id AND id_user = :idUser ORDER BY publicacoes.id DESC";
         $stmt = $PDO->prepare($query);
         $stmt->bindValue(':idLogado', $_POST['idLogado']);
         $stmt->bindValue(':idUser1', $_POST['idUser']);
 		
         $stmt->bindValue(':idLogado0', $_POST['idLogado']);
         $stmt->bindValue(':idUser0', $_POST['idUser']);
+		
+        $stmt->bindValue(':userA', $_POST['idUser']);
+        $stmt->bindValue(':userB', $_POST['idUser']);
 		
         $stmt->bindValue(':idUser2', $_POST['idUser']);
         $stmt->bindValue(':idUser', $_POST['idUser']);
