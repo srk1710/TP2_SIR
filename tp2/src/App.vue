@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <v-app id="app">
     <v-tabs style="position: fixed; z-index: 50;" v-if="existe">
       <v-tab class="col-3">
         <router-link class="col-12" tag="div" to="/">
@@ -35,7 +35,7 @@
     <center>
       <v-progress-circular id="progressCircular" :size="this.sizeProgress" :width="7" indeterminate></v-progress-circular>
     </center>
-  </div>
+  </v-app>
 </template>
 
 <script>

@@ -24,7 +24,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
         exit(0);
     }
 	
-	if(!isset($_POST['idUser'])){
+	if(!isset($_POST['idUser']) || !isset($_POST['idLogado']) ){
 		$response['errors'] = true;
 		$response['message'] = "Missing Parameteres";
 		die(json_encode($response));
@@ -32,9 +32,11 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 	
     try {
         $PDO->beginTransaction();
-        $query = "SELECT (SELECT count(publicacoes.id) FROM publicacoes, utilizadores WHERE id_user = utilizadores.id AND id_user = :idUser1) AS count, publicacoes.id AS idPub, publicacoes.foto AS fotoPub, descricao, data_publicacao, username, bio, nome, utilizadores.foto AS fotoUser FROM publicacoes, utilizadores WHERE id_user = utilizadores.id AND id_user = :idUser ORDER BY publicacoes.id DESC";
+        $query = "SELECT (SELECT CASE WHEN id_segue = :idLogado AND id_seguido = :idUser2 THEN true ELSE false END AS existe FROM seguir) AS segue, (SELECT count(publicacoes.id) FROM publicacoes, utilizadores WHERE id_user = utilizadores.id AND id_user = :idUser1) AS count, publicacoes.id AS idPub, publicacoes.foto AS fotoPub, descricao, data_publicacao, username, bio, nome, utilizadores.foto AS fotoUser, utilizadores.id AS idUser FROM publicacoes, utilizadores WHERE id_user = utilizadores.id AND id_user = :idUser ORDER BY publicacoes.id DESC";
         $stmt = $PDO->prepare($query);
+        $stmt->bindValue(':idLogado', $_POST['idLogado']);
         $stmt->bindValue(':idUser1', $_POST['idUser']);
+        $stmt->bindValue(':idUser2', $_POST['idUser']);
         $stmt->bindValue(':idUser', $_POST['idUser']);
 
         $stmt->execute();

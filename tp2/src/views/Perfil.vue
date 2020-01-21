@@ -6,27 +6,27 @@
         <v-img v-bind:src="this.foto" id="imagemPerfil" class="grey lighten-2 perfil"></v-img>
       </v-col>
       <v-col class="col-1"></v-col>
-      <v-col class="col-3 d-flex align-center mb-6" style="margin-top: 50px;">
-        <v-row>
+      <v-col style="margin-top: 50px;">
+        <v-row class="d-flex justify-center mb-6">
           <h1 class="font-weight-black" style="font-family: Roboto;">{{ this.publicacoes }}</h1>
         </v-row>
-        <v-row>
+        <v-row class="d-flex justify-center mb-6">
           <p class="font-weight-thin text-center" style="font-family: Roboto;">Publicações</p>
         </v-row>
       </v-col>
-      <v-col class="col-3 d-flex align-center mb-6" style="margin-top: 50px;">
-        <v-row>
+      <v-col style="margin-top: 50px;">
+        <v-row class="d-flex justify-center mb-6">
           <h1 class="font-weight-black" style="font-family: Roboto;">1600</h1>
         </v-row>
-        <v-row>
+        <v-row class="d-flex justify-center mb-6">
           <p class="font-weight-thin text-center" style="font-family: Roboto;">Seguidores</p>
         </v-row>
       </v-col>
-      <v-col class="col-3 d-flex align-center mb-6" style="margin-top: 50px;">
-        <v-row>
+      <v-col style="margin-top: 50px;">
+        <v-row class="d-flex justify-center mb-6">
           <h1 class="font-weight-black" style="font-family: Roboto;">2240</h1>
         </v-row>
-        <v-row>
+        <v-row class="d-flex justify-center mb-6">
           <p class="font-weight-thin text-center" style="font-family: Roboto;">A seguir</p>
         </v-row>
       </v-col>
