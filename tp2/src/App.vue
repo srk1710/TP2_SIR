@@ -7,6 +7,11 @@
         </router-link>
       </v-tab>
       <v-tab class="col-3">
+        <router-link class="col-12" tag="div" to="/search">
+          <v-icon left>mdi-account-search</v-icon>
+        </router-link>
+      </v-tab>
+      <v-tab class="col-3">
         <router-link class="col-12" tag="div" to="/nova">
           <v-icon left>mdi-plus-box</v-icon>
         </router-link>

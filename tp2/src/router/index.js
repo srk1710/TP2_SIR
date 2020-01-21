@@ -3,51 +3,51 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
-const routes = [{
-        path: "/",
-        name: "home",
-        component: () =>
-            import ("../views/Home.vue")
-    },
-    {
-        path: "/login",
-        name: "login",
-        component: () =>
-            import ("../views/Login.vue")
-    },
-    {
-        path: "/perfil",
-        name: "perfil",
-        component: () =>
-            import ("../views/Perfil.vue")
-    },
-    {
-        path: "/nova",
-        name: "nova",
-        component: () =>
-            import ("../views/NovaPub.vue")
-    },
-    {
-        path: "/pub",
-        name: "pub",
-        component: () =>
-            import ("../views/Publicacao.vue"),
-        props: true
-    },
-    {
-        path: "/p",
-        name: "perfilGeral",
-        component: () =>
-            import ("../views/PerfilGeral.vue"),
-        props: true
-    },
-    {
-        path: "/registar",
-        name: "registar",
-        component: () =>
-            import ("../views/Registar.vue"),
-        props: true
-    }
+const routes = [
+  {
+    path: "/",
+    name: "home",
+    component: () => import("../views/Home.vue")
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("../views/Login.vue")
+  },
+  {
+    path: "/perfil",
+    name: "perfil",
+    component: () => import("../views/Perfil.vue")
+  },
+  {
+    path: "/nova",
+    name: "nova",
+    component: () => import("../views/NovaPub.vue")
+  },
+  {
+    path: "/pub",
+    name: "pub",
+    component: () => import("../views/Publicacao.vue"),
+    props: true
+  },
+  {
+    path: "/p",
+    name: "perfilGeral",
+    component: () => import("../views/PerfilGeral.vue"),
+    props: true
+  },
+  {
+    path: "/registar",
+    name: "registar",
+    component: () => import("../views/Registar.vue"),
+    props: true
+  },
+  {
+    path: "/search",
+    name: "search",
+    component: () => import("../views/Search.vue"),
+    props: true
+  }
 ];
 
 const router = new VueRouter({

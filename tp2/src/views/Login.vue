@@ -50,8 +50,8 @@ export default {
       params.append("password", this.password);
       axios({
         method: "POST",
-        url: "http://192.168.64.2/API/api/login.php",
-        // url: "http://localhost/SIR/TP2_SIR/api/login.php",
+        //url: "http://192.168.64.2/API/api/login.php",
+        url: "http://localhost/SIR/TP2_SIR/api/login.php",
         data: params
       })
         .then(function(response) {
